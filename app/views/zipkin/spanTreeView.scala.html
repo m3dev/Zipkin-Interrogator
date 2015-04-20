@@ -1,0 +1,53 @@
+@(spanTree: com.m3.zipkin.AnalysedSpanEntryTree)
+
+
+@import scala.concurrent.duration.Duration
+@import com.m3.zipkin.SpanTreePrinter
+@import java.util.concurrent.TimeUnit._
+@import com.m3.zipkin.CriticalSpan
+
+
+<div class="media">
+
+    <div class="media-left">
+        @if(spanTree.children.isEmpty){
+            @if(spanTree.analysedSpan.issue == CriticalSpan){
+                <img class="media-object" src="holder.js/30x30/#e8492a:#FFF/text:!/size:20" alt="Critical span">
+            }else{
+                <img class="media-object" src="holder.js/30x30/#f8dc6c:#FFF/text:?/size:20" alt="Unacceptably long span">
+            }
+        }else{
+            <img class="media-object" src="holder.js/25x25/#FFF:#000/text:→" alt="Generic placeholder image">
+        }
+
+    </div>
+
+    <div class="media-body">
+        <h4 class="media-heading">@spanTree.analysedSpan.span.name <small>@spanTree.analysedSpan.span.duration.map { d => @{Duration(d, MICROSECONDS).toMillis} ms }</small></h4>
+        <p>
+        @if(spanTree.analysedSpan.span.annotations.nonEmpty){
+            <h5>Annotations</h5>
+            <ul>
+            @spanTree.analysedSpan.span.annotations.sortBy(_.timestamp).map { a =>
+                <li>@a.value @@ @a.timestamp</li>
+            }
+            </ul>
+
+        }
+
+        @if(spanTree.analysedSpan.span.binaryAnnotations.nonEmpty) {
+            <h5>Binary Annotations</h5>
+            <ul>
+            @spanTree.analysedSpan.span.binaryAnnotations.map(bA => bA.key -> SpanTreePrinter.binAnnotationConv(bA)).map { b =>
+                <li class=>@b._1 → @b._2</li>
+            }
+            </ul>
+        }
+        </p>
+
+        @spanTree.children.map { tree =>
+            @views.html.zipkin.spanTreeView(tree)
+        }
+    </div>
+
+</div>

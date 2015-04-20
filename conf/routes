@@ -1,0 +1,10 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+GET        /webjars/*file                                       controllers.WebJarAssets.at(file)
+
+GET        /                                                    controllers.Application.index
+GET        /:serviceName                                        controllers.Application.serviceSpans(serviceName: String)
+GET        /:serviceName/spans/:spanName                        controllers.Application.spanNameTraceIds(serviceName: String, spanName: String)
+GET        /:serviceName/spans/:spanName/traces/:traceId        controllers.Application.traceAnalysis(serviceName: String, spanName: String, traceId: String)

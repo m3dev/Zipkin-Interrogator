@@ -1,0 +1,8 @@
+@(breadcrumbs: BreadCrumbs)
+
+<ol class="breadcrumb" style="background-color: #FFF">
+    @breadcrumbs.links.init.map { link =>
+        <li><a href="@link.call.url">@link.label</a></li>
+    }
+    @breadcrumbs.links.lastOption.map { last => <li class="active">@last.label</li>}
+</ol>

@@ -1,0 +1,50 @@
+@(spanName: String, traceId: String, duration: scala.concurrent.duration.Duration, happenedAt: Option[String], serviceName: String, spanTrees: SpanTreesView, webUiLink: LinkView)
+
+<div class="page-header">
+    <h1>@spanName <small>@serviceName | @traceId</small></h1>
+</div>
+<div class="row">
+
+    <div class="col-xs-12">
+        <h4>Time taken: @duration.toMillis ms@happenedAt.map{ he =>@Html(s", ended: $he") }</h4>
+        <ul>
+            <li role="presentation"><a href="#zipkin-rendering">@webUiLink.label</a></li>
+            <li role="presentation"><a href="#" data-toggle="modal" data-target="#raw-modal">Raw</a></li>
+        </ul>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <h3>Analysis</h3>
+        @views.html.zipkin.spanTreesView(spanTrees)
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <h2 id="zipkin-rendering">Zipkin Web UI rendering <small><a href="@webUiLink.call.url" target="_blank"><span class="glyphicon glyphicon-new-window"></span></a></small></h2>
+        <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" src="@webUiLink.call.url"></iframe>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="raw-modal" tabindex="-1" role="dialog" aria-labelledby="raw-modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="raw-view-label">Raw view</h4>
+            </div>
+            <div class="modal-body">
+            <pre>
+@spanTrees.pre.mkString("\n")
+            </pre>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

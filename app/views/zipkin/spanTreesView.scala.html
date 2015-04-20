@@ -1,0 +1,15 @@
+@(spanTreesView: SpanTreesView)
+
+@if(spanTreesView.trees.nonEmpty) {
+    <ul class="media-list">
+    @spanTreesView.trees.map { tree =>
+        @views.html.zipkin.spanTreeView(tree)
+    }
+    </ul>
+} else {
+    <h3>There doesn't seem to be anything critical in this trace</h3>
+    <p>
+      Duration in microseconds was: @spanTreesView.traceCombo.trace.duration
+    </p>
+}
+

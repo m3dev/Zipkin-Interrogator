@@ -1,0 +1,18 @@
+@()(implicit req: RequestHeader)
+
+@import views.helpers.FlashLevel
+
+@{
+    for {
+        flashKey <- FlashLevel.values
+        msg <- req.flash.get(flashKey.toString)
+        flashClass = FlashLevel.bootstrapClassFor(flashKey)
+    } yield {
+        Html(s"""
+        <div class="alert alert-dismissable $flashClass">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            $msg
+        </div>
+        """)
+    }
+}

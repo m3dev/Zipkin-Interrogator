@@ -1,0 +1,44 @@
+@(title: String, breadcrumbs: BreadCrumbs, content: Html)(implicit req: RequestHeader)
+
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@title</title>
+    <link rel='stylesheet' href='@routes.WebJarAssets.at(WebJarAssets.locate("css/bootstrap.min.css"))'>
+    <script type='text/javascript' src='@routes.WebJarAssets.at(WebJarAssets.locate("jquery.min.js"))'></script>
+
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="@routes.WebJarAssets.at(WebJarAssets.locate("html5shiv.min.js"))"></script>
+    <script src="@routes.WebJarAssets.at(WebJarAssets.locate("respond.min.js"))"></script>
+    <![endif]-->
+    <script src="@routes.WebJarAssets.at(WebJarAssets.locate("jquery", "jquery.min.js"))"></script>
+
+</head>
+<body style="padding-top: 70px;">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">Zipkin Interrogator</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        @views.html.breadcrumbs(breadcrumbs)
+
+        @views.html.alerts()
+
+        @content
+    </div>
+
+
+        <!-- Bootstrap core JavaScript
+    ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <!-- Latest compiled and minified JavaScript -->
+    <script src="@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap", "bootstrap.min.js"))"></script>
+    <script src="@routes.WebJarAssets.at(WebJarAssets.locate("holder", "holder.min.js"))"></script>
+</body>
+</html>
