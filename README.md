@@ -21,6 +21,24 @@ Zipkin-Interrogator is a Play application that connects to your Zipkin infrastru
 Query API and digests that data for you to make it easy for you to understand where bottlenecks lie in your distributed
 system.
 
+**Important** Zipkin-Interrogator is meant to be an internal tool. As of now, there are no authentication checks built-in, so make
+it gets deployed in a secure environment.
+
+## How to run
+
+Assuming you have the following set up:
+
+ - [Java](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+ - [Typesafe Activator](https://www.typesafe.com/activator/download)
+ - Zipkin infrastructure ;)
+ 
+Starting up the server locally is `$ activator run`. Of course, see `application.conf` for expected environment variables.
+
+## How to deploy
+
+This is a Play app, so you can look at [the official docs](https://www.playframework.com/documentation/2.3.x/Production) to find out
+how to best deploy the app into your production environment.
+
 ## Moving parts
 
 - Scala 2.11.x
