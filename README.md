@@ -1,27 +1,27 @@
 # Zipkin Interrogator
 
-Note: There is an expectation that the reader understands what Zipkin is and what it is used for. (annotations such as 
+Note: There is an expectation that the reader understands what Zipkin is and what it is used for (i.e. annotations such as
 'ss', 'sr', and 'cs' and 'cr' are not new to you). If you don't, here are a few great places to start:
 
 - [Twitter's Blog entry on Zipkin](https://blog.twitter.com/2012/distributed-systems-tracing-with-zipkin)
 - [Intro to Zipkin](http://itszero.github.io/blog/2014/03/03/introduction-to-twitters-zipkin/)
 - [OpenZipkin on Gitlab](https://github.com/openzipkin)
-  
+
 At M3, our main frontend, [M3.com](https://www.m3.com) is a Scala Play app that talks to a large number of distributed
 systems via [Octoparts](http://m3dev.github.io/octoparts/) in order to build up a page. To help us keep an eye on performance,
-possible request loops, places where we should be doing things in parallel but arent, and general issues in production, 
-one of the tools we use is Zipkin. 
+possible request loops, places where we should be doing things in parallel but aren't, and general issues in production,
+one of the tools we use is Zipkin.
 
-Zipkin is great; it's implementation is based on [Google's Dapper whitepaper](http://research.google.com/pubs/pub36356.html) 
+Zipkin is great; its implementation is based on [Google's Dapper whitepaper](http://research.google.com/pubs/pub36356.html)
 and it works well. However, a Trace from a single front-end request [can result in hundreds or thousands of spans](https://www.google.co.jp/search?q=zipkin+trace&espv=2&biw=1680&bih=908&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjlvKPBi7XKAhXFHpQKHRYBAaYQ_AUIBigB#imgrc=J3544E6OANAQwM%3A), and
-in our async architecture, _most_ of spans were happening in parallel, it became very difficult for us to identify bottlenecks
+in our async architecture, _most_ spans were happening in parallel, so it became very difficult for us to identify bottlenecks
 that were high in priority; **and thus Zipkin-Interrogator was born**
 
-Zipkin-Interrogator is a Play application that connects to your Zipkin infrastructure, grabs trace and span data using the Zipkin 
+Zipkin-Interrogator is a Play application that connects to your Zipkin infrastructure, grabs trace and span data using the Zipkin
 Query API and digests that data for you to make it easy for you to understand where bottlenecks lie in your distributed
 system.
 
-**Important** Zipkin-Interrogator is meant to be an internal tool. As of now, there are no authentication checks built-in, so make
+**Important** Zipkin-Interrogator is meant to be an internal tool. As of now, there are no authentication checks built in, so make sure
 it gets deployed in a secure environment.
 
 ## How to run
@@ -31,7 +31,7 @@ Assuming you have the following set up:
  - [Java](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
  - [Typesafe Activator](https://www.typesafe.com/activator/download)
  - Zipkin infrastructure ;)
- 
+
 Starting up the server locally is `$ activator run`. Of course, see `application.conf` for expected environment variables.
 
 ## How to deploy
@@ -90,7 +90,7 @@ Accurate on release day :P
   spans that are running in parallel.
 - A *Yellow* square with a question mark denotes a *non-ignorable span*, meaning that it is not the slowest amongst a group
   of spans that are running in parallel, but none-the-less, it is above 1 second in duration.
-  
+
 ## License
 
 Copyright 2016 M3, Inc.
